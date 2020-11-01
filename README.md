@@ -1,3 +1,5 @@
+# Generate Music based on emotion
+
 ### Step 0 Preparing dataset
 
 The dataset is at [DEAM dataset](http://cvml.unige.ch/databases/DEAM/), it includes more than 1800 music data with midi file.
