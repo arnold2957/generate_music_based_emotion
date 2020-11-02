@@ -1,4 +1,6 @@
-# Generate Music based on emotion
+# Generate Music based on Emotion
+
+[TOC]
 
 ### Step 0 Preparing dataset
 
