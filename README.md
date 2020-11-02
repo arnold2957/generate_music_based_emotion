@@ -1,13 +1,6 @@
 # Generate Music based on Emotion
 
-- [Generate Music based on Emotion](#generate-music-based-on-emotion)
-    + [Step 0 Preparing dataset](#step-0-preparing-dataset)
-    + [Step 1 Extra Feature](#step-1-extra-feature)
-    + [Step 2 Find the best CNN/CNN+RNN model](#step-2-find-the-best-cnn-cnn-rnn-model)
-      - [CNN model](#cnn-model)
-      - [CNN+RNN model](#cnn-rnn-model)
-      - [Compare model](#compare-model)
-    + [Step 3](#step-3)
+~~TODO: get TOC from https://ecotrust-canada.github.io/markdown-toc/~~ 
 
 ### Step 0 Preparing dataset
 
@@ -96,3 +89,7 @@ And we find the best model is CNN+RNN in cf=16, vaDense=8, Gru = 32, batch_size 
 
 
 
+
+~~~
+
+~~~
