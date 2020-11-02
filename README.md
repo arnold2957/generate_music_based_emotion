@@ -1,6 +1,13 @@
 # Generate Music based on Emotion
 
-[TOC]
+- [Generate Music based on Emotion](#generate-music-based-on-emotion)
+    + [Step 0 Preparing dataset](#step-0-preparing-dataset)
+    + [Step 1 Extra Feature](#step-1-extra-feature)
+    + [Step 2 Find the best CNN/CNN+RNN model](#step-2-find-the-best-cnn-cnn-rnn-model)
+      - [CNN model](#cnn-model)
+      - [CNN+RNN model](#cnn-rnn-model)
+      - [Compare model](#compare-model)
+    + [Step 3](#step-3)
 
 ### Step 0 Preparing dataset
 
