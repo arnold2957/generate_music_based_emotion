@@ -1,12 +1,17 @@
 # Generate Music based on Emotion
 
 ~~TODO: get TOC from https://ecotrust-canada.github.io/markdown-toc/~~ 
+## Overview
 
-### Step 0 Preparing data
+## Requirement
 
-Data and external lib can be download at [oneDrive].
+To run Step 3-1 and 3-2, MusicVAE is required. [Here](https://github.com/magenta/magenta/blob/master/README.md#installation) is the description of how to install it.
 
-#### Data
+It also need python library 
+
+## Data
+Data and external lib can be download from [oneDrive].
+#### Dataset
 ##### 0.DEAM
 
 The [DEAM dataset](http://cvml.unige.ch/databases/DEAM/). Only including the MP3 audio files and the dynamic per-half-second annotations.
@@ -42,6 +47,8 @@ This is for converting MP3 file to WAV file.
 ##### TiMIDIty
 
 This is for converting MIDI file to WAV file.
+
+## Details of each step
 
 ### Step 1 Extra Feature
 

@@ -1,0 +1,6 @@
+librosa==0.7.2
+numpy==1.19.1
+parse==1.11.1
+pretty_midi==0.2.9
+pydub==0.24.1
+tensorflow==2.0.0
