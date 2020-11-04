@@ -9,9 +9,9 @@ Data and external lib can be download at [oneDrive].
 #### Data
 ##### 0.DEAM
 
-The [DEAM dataset](http://cvml.unige.ch/databases/DEAM/). Only including the mp3 audio files and the dynamic per-half-second annotations.
+The [DEAM dataset](http://cvml.unige.ch/databases/DEAM/). Only including the MP3 audio files and the dynamic per-half-second annotations.
 
-It also have 2 folders, one called 'midi' is storing the midi format of mp3 files, which convert by the online converter [bearaudiotool](https://www.bearaudiotool.com/mp3-to-midi). one called 'wav'is stroing the 'wav' format of mp3 files which convert by FFmpeg.
+It also have 2 folders, one called 'MIDI' is storing the MIDI format of MP3 files, which convert by the online converter [bearaudiotool](https://www.bearaudiotool.com/MP3-to-MIDI). one called 'WAV'is stroing the 'WAV' format of MP3 files which convert by FFmpeg.
 
 ##### 1. 400-100 dataset
 
@@ -37,15 +37,15 @@ The re-evaluation result of the output in step 3-2 by the best model we found in
 
 ##### FFmpeg
 
-This is for converting mp3 file to wav file.
+This is for converting MP3 file to WAV file.
 
-##### TiMidity
+##### TiMIDIty
 
-This is for converting midi file to wav file.
+This is for converting MIDI file to WAV file.
 
 ### Step 1 Extra Feature
 
-Firstly, we should explain the word we will used in the next:
+Firstly, we should explain the words we will used in the next:
 1. **'emotion label'**: a $1\times 2$ vector, include 2 real numbers. One for the value of Arousal and another for the value of Valence in the V-A emotion model.
 2. **'data'**: one music song in the dataset, should be more than 45 seconds long, with 60 emotion labels.
 3. **'fragment'**: one data have 60 half-second fragment. Each fragment corresponds to one emotion label.
@@ -53,7 +53,7 @@ Firstly, we should explain the word we will used in the next:
 
 Three things we do in this step:
 
-Firstly, we check and find all data which is available on both format and randomly sample 400 data for training and 100 data for testing. We name them as "400-100 dataset". "Available" means the data have a proper length in piano roll for midi (piano roll is around 4500 long) and more than 45 seconds for wav.
+Firstly, we check and find all data which is available on both format and randomly sample 400 data for training and 100 data for testing. We name them as "400-100 dataset". "Available" means the data have a proper length in piano roll for MIDI (piano roll is around 4500 long) and more than 45 seconds for WAV.
 
 Secondly, we exact features from the data. We create 4 datasets in total, size of **each data** are showed below:
 
@@ -76,14 +76,14 @@ Finally, we save all the datasets.
 
 We just set a CNN network and train it on the data we get from step1.
 
-The aim is to know which music format is better - wav or converted midi.
+The aim is to know which music format is better - WAV or converted MIDI.
 
 Input shape is 50\*128.
 
 The architect is:
 Conv2D(64,3,relu) ->Conv2D(64,3,relu) ->maxpooling(2);
 
-then it split into two branch for valence and arousal.For each branch:
+then it split into two branch for valence and arousal. For each branch:
 
 Conv2D(64,3,relu) ->Conv2D(64,3,relu) ->maxpooling(2)->Conv2D(128,3,relu)->maxpooling(2)  ->dropout(0.25  dropped)  ->Conv2D(256,3,relu)  ->max-pooling(2) ->dropout(0.25) ->Conv2D(256,3,relu) ->maxpooling(2) ->dropout(0.25)->Conv2D(256,3,relu) ->maxpooling(1,3) ->dropout(0.25) ->flatten ->dense(256)->dropout(0.5) ->dense(256) ->dropout(0.5) ->dense(1)
 
@@ -91,7 +91,7 @@ Output shape is 1\*2 for valence and arousal.
 
 #### 2.2 CNN+RNN
 
-We do a simple CNN first and then run a RNN(bi-gru). We using the grid search to find the best model.
+We do a simple CNN first and then run a RNN(bi-gru). We using the grid search to find the best model. And will do on both WAV and MIDI files.
 
 Input shape is 60\*128.
 
@@ -102,20 +102,34 @@ Output shape is 60*2.
 
 The cf, vaDense and Gru are the hyper-parameter we will decide by grid search.
 
-And will do on both wav and midi files.
-
-#### Compare model
-
-We load all the datasets and run 2 models.
-
 The range for CNN+RNN grid search is:
 cf: 8,16
 vaDense: 8, 16
 Gru: 8,16,32
 batch_size: 5,10,15.
 
-And we find the best model is CNN+RNN in cf=16, vaDense=8, Gru = 32, batch_size = 15.
+#### Compare model
+
+Every models have 2 datasets in different music format, thus we have 4 trainings at all.
+
+The loss is the MSE for CNN+RNN. And we find the best model in CNN+RNN is when format is WAV, cf=16, vaDense=8, Gru = 32, batch_size = 15.
 
 ### Step 3
+#### 3.1 Train MusicVAE
 
+Firstly we build the dataset for MusicVAE, and then train it.
+
+Refereance: [MusicVAE-training-your-own-musicvae](https://github.com/magenta/magenta/tree/master/magenta/models/music_vae/#training-your-own-musicvae).
+
+#### 3.2 Interpolate and Evaluate the result
+
+In this part, we randomly sample some fragments of same data.
+
+Because MusicVAE requires the format of MIDI, so we sample MIDI data. We also write a function on split MIDI by time.
+
+Then we put 2 sampled data into MusicVAE and interpolate to create 2 outputs.
+
+And we convert the outputs into WAV format because our best emotion model is CNN+RNN on WAV format.
+
+Finally we record the emotion labels of our result and the original emotion labels of 2 sampled data.
 
