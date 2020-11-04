@@ -1,6 +1,30 @@
 # Generate Music based on Emotion
 
-~~TODO: get TOC from https://ecotrust-canada.github.io/markdown-toc/~~ 
+- [Generate Music based on Emotion](#generate-music-based-on-emotion)
+  * [Overview](#overview)
+  * [Requirement](#requirement)
+  * [Data and External Lib](#data-and-external-lib)
+      - [Dataset](#dataset)
+        * [0. DEAM](#0-deam)
+        * [1. 400-100 dataset](#1-400-100-dataset)
+      - [Other data](#other-data)
+        * [2. Best model](#2-best-model)
+        * [3-1. Music VAE checkpoint](#3-1-music-vae-checkpoint)
+        * [3-2. Output from MusicVAE](#3-2-output-from-musicvae)
+        * [3-3. Emotion Changing result](#3-3-emotion-changing-result)
+      - [External lib](#external-lib)
+        * [FFmpeg](#ffmpeg)
+        * [TiMidity](#timidity)
+  * [Details of each step](#details-of-each-step)
+    + [Step 1 Extract Feature](#step-1-extract-feature)
+    + [Step 2 Find the best CNN/CNN+RNN model](#step-2-find-the-best-cnn-cnn-rnn-model)
+      - [2.1 CNN](#21-cnn)
+      - [2.2 CNN+RNN](#22-cnn-rnn)
+      - [Compare model](#compare-model)
+    + [Step 3 Generate Music by Interpolation and Evaluate the Emotion Labels of the Result](#step-3-generate-music-by-interpolation-and-evaluate-the-emotion-labels-of-the-result)
+      - [3.1 Train MusicVAE](#31-train-musicvae)
+      - [3.2 Interpolate and Evaluate the result](#32-interpolate-and-evaluate-the-result)
+
 ## Overview
 
 In this project we try to generate music based on the emotion labels. 
