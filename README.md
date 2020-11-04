@@ -5,6 +5,8 @@
 
 In this project we try to generate music based on the emotion labels. 
 
+We extract features of 2 format of music of one dataset, and train and test 2 neuron network(CNN and CNN+RNN) to find the best model for regression. Then we train MusicVAE, one open source project for generate music by VAE. Finally we evaluate the generated results on our model to find the changing of emotion labels before and after generation.
+
 ## Requirement
 
 It requires python library librosa,  pretty_midi and  pydub for music,  numpy, parse and tensorflow for network.
