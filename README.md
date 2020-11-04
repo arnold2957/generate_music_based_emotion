@@ -89,9 +89,9 @@ Conv2D(64,3,relu) ->Conv2D(64,3,relu) ->maxpooling(2)->Conv2D(128,3,relu)->maxpo
 
 Output shape is 1\*2 for valence and arousal.
 
-#### CNN+RNN model
+#### 2.2 CNN+RNN
 
-We do a simple CNN first and then run a RNN(bi-gru).
+We do a simple CNN first and then run a RNN(bi-gru). We using the grid search to find the best model.
 
 Input shape is 60\*128.
 
@@ -101,6 +101,8 @@ Conv2D(**cf**,3,relu) ->batchNormalization ->reshape; then it split into two bra
 Output shape is 60*2.
 
 The cf, vaDense and Gru are the hyper-parameter we will decide by grid search.
+
+And will do on both wav and midi files.
 
 #### Compare model
 
