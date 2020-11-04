@@ -3,38 +3,44 @@
 ~~TODO: get TOC from https://ecotrust-canada.github.io/markdown-toc/~~ 
 ## Overview
 
+In this project we try to generate music based on the emotion labels. 
+
 ## Requirement
+
+It requires python library librosa,  pretty_midi and  pydub for music,  numpy, parse and tensorflow for network.
 
 To run Step 3-1 and 3-2, MusicVAE is required. [Here](https://github.com/magenta/magenta/blob/master/README.md#installation) is the description of how to install it.
 
-It also need python library 
+It also requires FFmpeg and TiMidity for convert music to WAV format. The main executable file of these 2 software are already included in the [oneDrive]. 
 
-## Data
+## Data and External Lib
 Data and external lib can be download from [oneDrive].
 #### Dataset
 ##### 0.DEAM
 
-The [DEAM dataset](http://cvml.unige.ch/databases/DEAM/). Only including the MP3 audio files and the dynamic per-half-second annotations.
+The [DEAM dataset](http://cvml.unige.ch/databases/DEAM/). Including the MP3 audio files and the dynamic per-half-second annotations.
 
-It also have 2 folders, one called 'MIDI' is storing the MIDI format of MP3 files, which convert by the online converter [bearaudiotool](https://www.bearaudiotool.com/MP3-to-MIDI). one called 'WAV'is stroing the 'WAV' format of MP3 files which convert by FFmpeg.
+It also have 2 other folders, one called 'MIDI' stores the MIDI format of MP3 files, which convert by the online converter [bearaudiotool](https://www.bearaudiotool.com/MP3-to-MIDI). one called 'WAV' stores the 'WAV' format of MP3 files which convert by FFmpeg.
 
 ##### 1. 400-100 dataset
 
 The output by Step 1.
 
+#### Other data
+
 ##### 2. Best model
 
 The best model we found by grid search in Step 2.
 
-##### 3-1 Music VAE checkpoint
+##### 3-1. Music VAE checkpoint
 
 The checkpoint (training model) of [MusicVAE](https://github.com/magenta/magenta/tree/master/magenta/models/music_vae).
 
-##### 3-2 Output from MusicVAE
+##### 3-2. Output from MusicVAE
 
 The interpolation output by MusicVAE.
 
-##### 3-3 Emotion Changing result
+##### 3-3. Emotion Changing result
 
 The re-evaluation result of the output in step 3-2 by the best model we found in Step 2.
 
@@ -44,7 +50,7 @@ The re-evaluation result of the output in step 3-2 by the best model we found in
 
 This is for converting MP3 file to WAV file.
 
-##### TiMIDIty
+##### TiMidity
 
 This is for converting MIDI file to WAV file.
 
@@ -52,7 +58,7 @@ This is for converting MIDI file to WAV file.
 
 ### Step 1 Extra Feature
 
-Firstly, we should explain the words we will used in the next:
+Above all, we should explain the words we will used in the next:
 1. **'emotion label'**: a $1\times 2$ vector, include 2 real numbers. One for the value of Arousal and another for the value of Valence in the V-A emotion model.
 2. **'data'**: one music song in the dataset, should be more than 45 seconds long, with 60 emotion labels.
 3. **'fragment'**: one data have 60 half-second fragment. Each fragment corresponds to one emotion label.
@@ -121,10 +127,10 @@ Every models have 2 datasets in different music format, thus we have 4 trainings
 
 The loss is the MSE for CNN+RNN. And we find the best model in CNN+RNN is when format is WAV, cf=16, vaDense=8, Gru = 32, batch_size = 15.
 
-### Step 3
+### Step 3 Generate Music by Interpolation and Evaluate the Emotion Labels of the Result
 #### 3.1 Train MusicVAE
 
-Firstly we build the dataset for MusicVAE, and then train it.
+We build the dataset for MusicVAE, and then train it.
 
 Refereance: [MusicVAE-training-your-own-musicvae](https://github.com/magenta/magenta/tree/master/magenta/models/music_vae/#training-your-own-musicvae).
 
@@ -132,7 +138,7 @@ Refereance: [MusicVAE-training-your-own-musicvae](https://github.com/magenta/mag
 
 In this part, we randomly sample some fragments of same data.
 
-Because MusicVAE requires the format of MIDI, so we sample MIDI data. We also write a function on split MIDI by time.
+Because MusicVAE requires the format of MIDI, so we sample on MIDI dataset. We also write a function on split MIDI by time.
 
 Then we put 2 sampled data into MusicVAE and interpolate to create 2 outputs.
 
