@@ -2,20 +2,53 @@
 
 ~~TODO: get TOC from https://ecotrust-canada.github.io/markdown-toc/~~ 
 
-### Step 0 Preparing dataset
+### Step 0 Preparing data
 
-The dataset is at [DEAM dataset](http://cvml.unige.ch/databases/DEAM/), it includes more than 1800 music data with midi file.
+Data and external lib can be download at [oneDrive].
 
-By using the online convert website [bearaudiotool](https://www.bearaudiotool.com/mp3-to-midi) we convert its format into wav file.
+#### Data
+##### 0.DEAM
 
-We upload the datasets on [Onedrive].
+The [DEAM dataset](http://cvml.unige.ch/databases/DEAM/). Only including the mp3 audio files and the dynamic per-half-second annotations.
+
+It also have 2 folders, one called 'midi' is storing the midi format of mp3 files, which convert by the online converter [bearaudiotool](https://www.bearaudiotool.com/mp3-to-midi). one called 'wav'is stroing the 'wav' format of mp3 files which convert by FFmpeg.
+
+##### 1. 400-100 dataset
+
+The output by Step 1.
+
+##### 2. Best model
+
+The best model we found by grid search in Step 2.
+
+##### 3-1 Music VAE checkpoint
+
+The checkpoint (training model) of [MusicVAE](https://github.com/magenta/magenta/tree/master/magenta/models/music_vae).
+
+##### 3-2 Output from MusicVAE
+
+The interpolation output by MusicVAE.
+
+##### 3-3 Emotion Changing result
+
+The re-evaluation result of the output in step 3-2 by the best model we found in Step 2.
+
+#### External lib
+
+##### FFmpeg
+
+This is for converting mp3 file to wav file.
+
+##### TiMidity
+
+This is for converting midi file to wav file.
 
 ### Step 1 Extra Feature
 
-We should explain the word we will used in the next:
-1. **'emotion label'**: a $1\times 2$ vector, include 2 real numbers. One for the value of Arousal and another for the value of Valence.
-2. **'data'**: one music song in the dataset, should more than 45 seconds long, with 60 emotion labels.
-3. **'fragment'**: one data have 60 half-second fragment. Each emotion label corresponds to one fragment.
+Firstly, we should explain the word we will used in the next:
+1. **'emotion label'**: a $1\times 2$ vector, include 2 real numbers. One for the value of Arousal and another for the value of Valence in the V-A emotion model.
+2. **'data'**: one music song in the dataset, should be more than 45 seconds long, with 60 emotion labels.
+3. **'fragment'**: one data have 60 half-second fragment. Each fragment corresponds to one emotion label.
 4. **'fragment size'**: it depends on the sampling frequency and the number of features exacted in one sampling.
 
 Three things we do in this step:
@@ -39,16 +72,22 @@ Finally, we save all the datasets.
 
 ### Step 2 Find the best CNN/CNN+RNN model
 
-#### CNN model
+#### 2.1 CNN
 
-It is just a huge CNN.
+We just set a CNN network and train it on the data we get from step1.
+
+The aim is to know which music format is better - wav or converted midi.
 
 Input shape is 50\*128.
 
 The architect is:
-Conv2D(64,3,relu) ->Conv2D(64,3,relu) ->maxpooling(2); then it split intotwo branch for valence and arousal.Conv2D(64,3,relu) ->Conv2D(64,3,relu) ->maxpooling(2)->Conv2D(128,3,relu)->maxpooling(2)  ->dropout(0.25  dropped)  ->Conv2D(256,3,relu)  ->max-pooling(2) ->dropout(0.25) ->Conv2D(256,3,relu) ->maxpooling(2) ->dropout(0.25)->Conv2D(256,3,relu) ->maxpooling(1,3) ->dropout(0.25) ->flatten ->dense(256)->dropout(0.5) ->dense(256) ->dropout(0.5) ->dense(1)
+Conv2D(64,3,relu) ->Conv2D(64,3,relu) ->maxpooling(2);
 
-Output shape is 1\*2
+then it split into two branch for valence and arousal.For each branch:
+
+Conv2D(64,3,relu) ->Conv2D(64,3,relu) ->maxpooling(2)->Conv2D(128,3,relu)->maxpooling(2)  ->dropout(0.25  dropped)  ->Conv2D(256,3,relu)  ->max-pooling(2) ->dropout(0.25) ->Conv2D(256,3,relu) ->maxpooling(2) ->dropout(0.25)->Conv2D(256,3,relu) ->maxpooling(1,3) ->dropout(0.25) ->flatten ->dense(256)->dropout(0.5) ->dense(256) ->dropout(0.5) ->dense(1)
+
+Output shape is 1\*2 for valence and arousal.
 
 #### CNN+RNN model
 
@@ -78,18 +117,3 @@ And we find the best model is CNN+RNN in cf=16, vaDense=8, Gru = 32, batch_size 
 ### Step 3
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-~~~
-
-~~~
