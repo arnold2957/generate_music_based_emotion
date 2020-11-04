@@ -11,12 +11,12 @@ It requires python library librosa,  pretty_midi and  pydub for music,  numpy, p
 
 To run Step 3-1 and 3-2, MusicVAE is required. [Here](https://github.com/magenta/magenta/blob/master/README.md#installation) is the description of how to install it.
 
-It also requires FFmpeg and TiMidity for convert music to WAV format. The main executable file of these 2 software are already included in the [oneDrive]. 
+It also requires FFmpeg and TiMidity for convert music to WAV format. The main executable file of these 2 software are already included in the [oneDrive](https://anu365-my.sharepoint.com/:f:/g/personal/u6342568_anu_edu_au/ErvJ13yIn9RCkLRekwbp42wBBtALl1j8Mqn0K5or_TTCFg?e=Ui2enr). 
 
 ## Data and External Lib
-Data and external lib can be download from [oneDrive].
+Data and external lib can be download from [oneDrive](https://anu365-my.sharepoint.com/:f:/g/personal/u6342568_anu_edu_au/ErvJ13yIn9RCkLRekwbp42wBBtALl1j8Mqn0K5or_TTCFg?e=Ui2enr).
 #### Dataset
-##### 0.DEAM
+##### 0. DEAM
 
 The [DEAM dataset](http://cvml.unige.ch/databases/DEAM/). Including the MP3 audio files and the dynamic per-half-second annotations.
 
@@ -138,7 +138,7 @@ Refereance: [MusicVAE-training-your-own-musicvae](https://github.com/magenta/mag
 
 In this part, we randomly sample some fragments of same data.
 
-Because MusicVAE requires the format of MIDI, so we sample on MIDI dataset. We also write a function on split MIDI by time.
+Because MusicVAE requires the format of MIDI, so we sample on MIDI dataset. We also write a function for split MIDI by time.
 
 Then we put 2 sampled data into MusicVAE and interpolate to create 2 outputs.
 
