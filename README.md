@@ -56,19 +56,19 @@ This is for converting MIDI file to WAV file.
 
 ## Details of each step
 
-### Step 1 Extra Feature
+### Step 1 Extract Feature
 
 Above all, we should explain the words we will used in the next:
 1. **'emotion label'**: a $1\times 2$ vector, include 2 real numbers. One for the value of Arousal and another for the value of Valence in the V-A emotion model.
 2. **'data'**: one music song in the dataset, should be more than 45 seconds long, with 60 emotion labels.
 3. **'fragment'**: one data have 60 half-second fragment. Each fragment corresponds to one emotion label.
-4. **'fragment size'**: it depends on the sampling frequency and the number of features exacted in one sampling.
+4. **'fragment size'**: it depends on the sampling frequency and the number of features extracted in one sampling.
 
 Three things we do in this step:
 
 Firstly, we check and find all data which is available on both format and randomly sample 400 data for training and 100 data for testing. We name them as "400-100 dataset". "Available" means the data have a proper length in piano roll for MIDI (piano roll is around 4500 long) and more than 45 seconds for WAV.
 
-Secondly, we exact features from the data. We create 4 datasets in total, size of **each data** are showed below:
+Secondly, we extract features from the data. We create 4 datasets in total, size of **each data** are showed below:
 
 |         | wav                          | midi                      |
 | ------- | ---------------------------- | ------------------------- |
