@@ -153,6 +153,8 @@ Every models have 2 datasets in different music format, thus we have 4 trainings
 
 The loss is the MSE for CNN+RNN. And we find the best model in CNN+RNN is when format is WAV, cf=16, vaDense=8, Gru = 32, batch_size = 15.
 
+The loss for CNN on WAV is  0.09570403832693895
+
 ### Step 3 Generate Music by Interpolation and Evaluate the Emotion Labels of the Result
 #### 3.1 Train MusicVAE
 
@@ -171,4 +173,3 @@ Then we put 2 sampled data into MusicVAE and interpolate to create 2 outputs.
 And we convert the outputs into WAV format because our best emotion model is CNN+RNN on WAV format.
 
 Finally we record the emotion labels of our result and the original emotion labels of 2 sampled data.
-
